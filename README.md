@@ -3,6 +3,7 @@
 [![npm version](https://badge.fury.io/js/reloaderoo.svg)](https://badge.fury.io/js/reloaderoo)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/cameroncooke/reloaderoo)
 [![pkg.pr.new](https://pkg.pr.new/badge/cameroncooke/reloaderoo)](https://pkg.pr.new/~/OWNER/REPO)
 
 > **Test and hot-reload MCP servers with CLI inspection tools and transparent proxy capabilities**
