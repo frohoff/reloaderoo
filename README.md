@@ -4,7 +4,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/cameroncooke/reloaderoo)
-[![pkg.pr.new](https://pkg.pr.new/badge/cameroncooke/reloaderoo)](https://pkg.pr.new/~/OWNER/REPO)
+[![Windows](https://img.shields.io/badge/Windows-supported-green.svg)](#)
+[![Linux](https://img.shields.io/badge/Linux-untested-blue.svg)](#)
+[![macOS](https://img.shields.io/badge/macOS-supported-orange.svg)](#)
+[![pkg.pr.new](https://pkg.pr.new/badge/cameroncooke/reloaderoo)](https://pkg.pr.new/~/cameroncooke/reloaderoo)
 
 > **Test and hot-reload MCP servers with CLI inspection tools and transparent proxy capabilities**
 
@@ -21,7 +24,7 @@ Direct command-line access to MCP servers without client setup:
 - ✅ **Raw JSON output** - Ideal for scripts and automation
 - ✅ **8 inspection commands** - Complete MCP protocol coverage
 
-### 🔄 **Proxy Mode** (Hot-Reload Development)  
+### 🔄 **Proxy Mode** (Hot-Reload Development)
 Transparent proxy server that enables seamless hot-reloading:
 - ✅ **Hot-reload MCP servers** without disconnecting your AI client
 - ✅ **Session persistence** - Keep your development context intact
@@ -79,8 +82,8 @@ Then configure your AI client to connect to reloaderoo instead of directly to yo
 
 ### 🎯 **Recommended Clients**
 
-**Best Experience**: **VSCode** & **Cursor** - Full protocol support with automatic capability detection  
-**Good Experience**: **Claude Code** & **Windsurf** - Works well, may need manual refresh for new tools  
+**Best Experience**: **VSCode** & **Cursor** - Full protocol support with automatic capability detection
+**Good Experience**: **Claude Code** & **Windsurf** - Works well, may need manual refresh for new tools
 
 ## 🛠️ Development Workflow
 
@@ -202,7 +205,7 @@ Examples:
   reloaderoo inspect call-tool get_weather --params '{"location": "London"}' -- node server.js
   reloaderoo inspect server-info -- node server.js
   reloaderoo inspect mcp -- node server.js        # Start MCP inspection server
-  
+
   # Get clean JSON output without server logs
   reloaderoo inspect list-tools --quiet -- node server.js
   reloaderoo inspect call-tool echo --quiet --params '{"message":"test"}' -- node server.js
@@ -215,7 +218,7 @@ reloaderoo info [options]
 
 Options:
   --verbose                        Show detailed system information
-  
+
 Examples:
   reloaderoo info                  # Show basic system information
   reloaderoo info --verbose        # Show detailed diagnostics
@@ -293,7 +296,7 @@ This runs CLI mode as a persistent MCP server, exposing 8 debug tools through th
 - `list_resources` - List all server resources
 - `read_resource` - Read any server resource
 - `list_prompts` - List all server prompts
-- `get_prompt` - Get any server prompt  
+- `get_prompt` - Get any server prompt
 - `get_server_info` - Get comprehensive server info
 - `ping` - Test server connectivity
 
@@ -307,15 +310,15 @@ graph LR
     B -->|Forwards Messages| C[Your MCP Server]
     B -->|Manages Lifecycle| C
     B -->|Adds restart_server Tool| A
-    
+
     style A fill:#e1f5fe
-    style B fill:#f3e5f5  
+    style B fill:#f3e5f5
     style C fill:#e8f5e8
 ```
 
 **Proxy Mode Magic:**
 1. **Transparent Forwarding** - All MCP messages pass through seamlessly
-2. **Capability Augmentation** - Adds `restart_server` tool to your server's capabilities  
+2. **Capability Augmentation** - Adds `restart_server` tool to your server's capabilities
 3. **Process Management** - Spawns, monitors, and restarts your server process
 4. **Session Persistence** - Client connection remains active during server restarts
 5. **Protocol Compliance** - Full MCP v2025-03-26 support with intelligent fallbacks
@@ -327,9 +330,9 @@ graph LR
     A[Your Terminal] -->|Direct Commands| B[reloaderoo inspect]
     B -->|Spawns & Queries| C[Your MCP Server]
     B -->|Returns JSON| A
-    
+
     style A fill:#e8f5e8
-    style B fill:#f3e5f5  
+    style B fill:#f3e5f5
     style C fill:#e1f5fe
 ```
 
@@ -369,7 +372,7 @@ Configure your MCP client to connect to reloaderoo proxy instead of your server 
 {
   "mcpServers": {
     "my-dev-server": {
-      "command": "reloaderoo", 
+      "command": "reloaderoo",
       "args": [
         "proxy",
         "--",
@@ -444,7 +447,7 @@ reloaderoo info --verbose
 # Increase restart timeout
 reloaderoo proxy --restart-timeout 60000 -- node my-server.js
 
-# Check restart limits  
+# Check restart limits
 reloaderoo proxy --max-restarts 5 -- node my-server.js
 ```
 
