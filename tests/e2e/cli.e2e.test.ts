@@ -222,7 +222,7 @@ describe('CLI Commands E2E', () => {
       const stderrOutput = reloaderoo.getStderrOutput().join('');
 
       TestHelpers.assertFailureExitCode(exitCode);
-      expect(stderrOutput).toContain('unknown command');
+      expect(stderrOutput).toContain('Command not found: invalid-command');
     });
 
     it('should handle invalid options gracefully', async () => {
@@ -236,7 +236,7 @@ describe('CLI Commands E2E', () => {
       const stderrOutput = reloaderoo.getStderrOutput().join('');
 
       TestHelpers.assertFailureExitCode(exitCode);
-      expect(stderrOutput).toContain('unknown option');
+      expect(stderrOutput).toContain('Command not found: --invalid-option');
     });
 
     it('should handle missing child command for inspect', async () => {
