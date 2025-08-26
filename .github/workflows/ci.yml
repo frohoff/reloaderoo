@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -41,3 +41,5 @@ jobs:
 
         # Test inspect commands
         timeout 10s node dist/bin/reloaderoo.js inspect list-tools -- node test-server-sdk.js || echo "CLI inspect works"
+
+    - run: npx pkg-pr-new publish
