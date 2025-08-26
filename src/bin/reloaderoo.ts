@@ -166,39 +166,60 @@ function shouldRunCLI(): boolean {
     return true;
   }
 
-  // If we have -- separator, treat as proxy mode (backward compatibility)
-  if (args.includes('--')) {
-    return false;
-  }
-
-  // Default: if we have any arguments, assume CLI mode
-  return args.length > 0;
+  // Default: assume proxy mode (MCP server mode) for any other arguments
+  // This makes the tool work intuitively: "reloaderoo node server.js" works
+  // Users who want CLI commands use explicit subcommands like "reloaderoo inspect ..."
+  return false;
 }
 
 /**
  * Run in MCP server mode (proxy mode with default behavior)
  */
 async function runMCPServer(): Promise<void> {
-  // Check if child command is provided via --
+  // Check if child command is provided via -- or directly as arguments
   const dashIndex = process.argv.indexOf('--');
+  const args = process.argv.slice(2);
 
-  if (dashIndex === -1 || dashIndex >= process.argv.length - 1) {
-    // No child command provided - show helpful message
-    process.stderr.write('reloaderoo: MCP development proxy server\n');
-    process.stderr.write('\n');
-    process.stderr.write('Error: Child MCP server command is required\n');
-    process.stderr.write('Usage: reloaderoo -- <child-command> [args...]\n');
-    process.stderr.write('\n');
-    process.stderr.write('Examples:\n');
-    process.stderr.write('  reloaderoo -- node my-mcp-server.js\n');
-    process.stderr.write('  reloaderoo -- python server.py --port 8080\n');
-    process.stderr.write('\n');
-    process.stderr.write('💡 For CLI tools and debugging, use:\n');
-    process.stderr.write('  reloaderoo --help              # Show all available commands\n');
-    process.stderr.write('  reloaderoo inspect --help      # Show inspection tools\n');
-    process.stderr.write('  reloaderoo info                # Show system information\n');
-    process.stderr.write('\n');
-    process.exit(1);
+  if (dashIndex !== -1) {
+    // -- separator found, use traditional approach
+    if (dashIndex >= process.argv.length - 1) {
+      // No child command after --
+      process.stderr.write('reloaderoo: MCP development proxy server\n');
+      process.stderr.write('\n');
+      process.stderr.write('Error: Child MCP server command is required after --\n');
+      process.stderr.write('Usage: reloaderoo -- <child-command> [args...]\n');
+      process.stderr.write('\n');
+      process.stderr.write('Examples:\n');
+      process.stderr.write('  reloaderoo -- node my-mcp-server.js\n');
+      process.stderr.write('  reloaderoo -- python server.py --port 8080\n');
+      process.stderr.write('\n');
+      process.exit(1);
+    }
+  } else {
+    // No -- separator, treat args directly as child command
+    if (args.length === 0) {
+      // No arguments at all
+      process.stderr.write('reloaderoo: MCP development proxy server\n');
+      process.stderr.write('\n');
+      process.stderr.write('Error: Child MCP server command is required\n');
+      process.stderr.write('Usage: reloaderoo [child-command] [args...]\n');
+      process.stderr.write('   OR: reloaderoo -- <child-command> [args...]\n');
+      process.stderr.write('\n');
+      process.stderr.write('Examples:\n');
+      process.stderr.write('  reloaderoo node my-mcp-server.js\n');
+      process.stderr.write('  reloaderoo -- node my-mcp-server.js\n');
+      process.stderr.write('  reloaderoo -- python server.py --port 8080\n');
+      process.stderr.write('\n');
+      process.stderr.write('💡 For CLI tools and debugging, use:\n');
+      process.stderr.write('  reloaderoo --help              # Show all available commands\n');
+      process.stderr.write('  reloaderoo inspect --help      # Show inspection tools\n');
+      process.stderr.write('  reloaderoo info                # Show system information\n');
+      process.stderr.write('\n');
+      process.exit(1);
+    }
+    
+    // Insert -- separator so proxy command parsing works correctly
+    process.argv.splice(2, 0, '--');
   }
 
   // Insert 'proxy' command and run CLI
