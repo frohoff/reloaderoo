@@ -76,7 +76,7 @@ export class MCPProxy {
           tools: { listChanged: true },
           prompts: { listChanged: true },
           resources: { subscribe: true, listChanged: true },
-          completion: { argument: true },
+          completions: { argument: true },
           sampling: {}
         }
       }
